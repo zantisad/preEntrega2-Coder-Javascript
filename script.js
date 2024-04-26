@@ -5,12 +5,28 @@ class Estudiante{
         this.nombre = nombre;
         this.nota = nota;
         this.agregarEstudiante();
+        this.comprobarSiAprueba();
     }
 
     agregarEstudiante() {      //awutomatizar el agregado de estudiantes al array
         estudiantes.push(this); 
     }
+
+    comprobarSiAprueba() {     // automatizar la comprobacion de si aprobaron o 
+        if(this.nota > 5) {    // desaprobaron y mandarlos al array correspondiente 
+            siAprobados.push(this)
+        } else {
+            noAprobados.push(this)
+        }
+    }
 }
+
+let siAprobados = [];
+let noAprobados = [];
+console.log('La lista de alumnos que aprobaron son: ');
+console.log(siAprobados)
+console.log('La lista de alumnos que desaprobaron son: ');
+console.log(noAprobados)
 
 //array vacio donde vamos a guardar todos los nombres y estudiantes
 let estudiantes = []
@@ -27,6 +43,7 @@ let alum8 = new Estudiante("María", 7);
 let alum9 = new Estudiante("Juan", 8);
 let alum10 = new Estudiante("Laura", 4);
 let alum11 = new Estudiante("Jorge", 2);
+
 
 
 ////////////// interactividad con el usuario //////////////////
@@ -106,3 +123,5 @@ function encontrarElPeorEstudiante() {
 
 const peorEstudiante = encontrarElPeorEstudiante();
 console.log(`El/la peor estudiante/a fue ${peorEstudiante.nombre} con una nota de ${peorEstudiante.nota}`);
+
+
