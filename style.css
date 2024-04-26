@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lilita+One&family=Lunasima:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    font-family: "Lunasima", sans-serif;
+
+}
+
+body {
+    background-color: #f7f5f5;
+}
+
+.titulo {
+    text-align: center;
+    padding: 25px;
+}
+
+.recuadroInfoGeneral {
+    text-align: center;
+}
+
+.recuadroInfoDatos {
+    padding: 6px;
+}
+
+.recuadroInfoDatos p {
+    margin: 2px;
+}
+
+table {
+    margin: 10px;
+    width: 100%;
+    font-size: 13px;
+    border-collapse: collapse;
+    font-weight: bold;
+}
+
+table th {
+    text-align: left;
+    color: white;
+    background-color: rgb(51, 209, 51);
+}
+
+table td,td {
+    border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f0eaea;
+}
