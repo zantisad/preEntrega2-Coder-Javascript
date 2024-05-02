@@ -34,7 +34,7 @@ let estudiantes = JSON.parse(localStorage.getItem('Usuarios')) || [];
 
     addEventListeners();
     function addEventListeners() {
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => { // lo ejecutamos al iniciar la pagina para cargar el LocalSorage y que este se agregue a la tabla
             for (let i = 0; i < estudiantes.length; i++ ) {
 
                 let tabla = document.getElementById("miTabla").getElementsByTagName("tbody")[0];  // llamar al tbody de la tabla
@@ -104,12 +104,6 @@ function FuncionDeInicio() { //funcion asociada al boton de "CONFIRMAR"
     let mensajeError = document.getElementById("mensajeError");
     mensajeError.style.color = "green";
     mensajeError.textContent = "Añadido correctamente";
-
-
-    /////////////////////////////////////////////////////////////////////////
-
-
-    
 
 
     // Agregar valores a la tabla
@@ -229,8 +223,3 @@ function FuncionDeInicio() { //funcion asociada al boton de "CONFIRMAR"
 
     let nuevoEstudiante = document.getElementById("nuevoEstudiante");
     nuevoEstudiante.innerHTML = `Agrega un nuevo estudiante`
-
-
-
-
-
