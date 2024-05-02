@@ -11,86 +11,78 @@
 <body>
     <main>
         <div class="titulo">
-            <h1>Cuadro de notas finales de los estudiantes</h1>
+            <h1>CUADRO DE NOTAS FINALES DE LOS ESTUDIANTES</h1>
         </div>
 
 
-        <div class="recuadroInfoGeneral">
-            <h3>INFO GENERAL</h3>
+        <div class="tablaGeneral">
+            <table id="miTabla">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Nota</th>
+                        <th>Estado</th>
+                    </tr 
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tuNotaTitulo">
+            <h3 id="nuevoEstudiante">Empieza agregando un estudiante</h3>
+        </div>
+
+        <div class="miNota">
+            <form action="#">
+                <div class="nombreApellido">
+                    <input id="inputNombre" type="text" placeholder="Nombre" maxlength="18">
+                    <input id="inputApellido" type="text" placeholder="Apellido" maxlength="18">
+                </div>
+                <div class="notaEnviar">
+                    <input id="inputNota" type="number" min="1" max="10" step="1" placeholder="Nota">
+                    <button id="botonAgregar">CONFIRMAR</button>
+                </div>
+                <div class="mensajeError" id="mensajeError"></div>
+
+
+            </form>
+        </div>
+
+        <div class="recuadroInfoGeneral" id="recuadroInfoGeneral">
+            <h3>INFORMACION GENERAL</h3>
             <div class="recuadroInfoDatos">
-                <p>La nota promedio de los 8 estudiantes fue de: X</p>
-                <p>El/la mejor estudiante/a fue Nombre Apellido con una nota de X</p>
-                <p>El/la peor estudiante/a fue Nombre Apellido con una nota de X</p></div>
-            
+                <p id="notapromedio">- La nota promedio de los __ estudiantes fue de: __</p>
+                <p id="mejorestudiante">- El/la mejor estudiante fue _______ con una nota de __</p>
+                <p id="peorestudiante">- El/la peor estudiante fue _______ con una nota de __</p>
+            </div>
         </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Nota</th>
-                    <th>Estado</th>
-                </tr </thead>
-            <tbody>
-                <tr>
-                    <td>Nombre</td>
-                    <td>Apellido</td>
-                    <td>10</td>
-                    <td>Aprobado</td>
-                </tr>
-                <tr>
-                    <td>Nombre</td>
-                    <td>Apellido</td>
-                    <td>9</td>
-                    <td>Aprobado</td>
-                </tr>
-                <tr>
-                    <td>Nombre</td>
-                    <td>Apellido</td>
-                    <td>8</td>
-                    <td>Aprobado</td>
-                </tr>
-                <tr>
-                    <td>Nombre</td>
-                    <td>Apellido</td>
-                    <td>8</td>
-                    <td>Aprobado</td>
-                </tr>
-                <tr>
-                    <td>Nombre</td>
-                    <td>Apellido</td>
-                    <td>6</td>
-                    <td>Aprobado</td>
-                </tr>
-                <tr>
-                    <td>Nombre</td>
-                    <td>Apellido</td>
-                    <td>5</td>
-                    <td>Desaprobado</td>
-                </tr>
-                <tr>
-                    <td>Nombre</td>
-                    <td>Apellido</td>
-                    <td>4</td>
-                    <td>Desaprobado</td>
-                </tr>
-                <tr>
-                    <td>Nombre</td>
-                    <td>Apellido</td>
-                    <td>2</td>
-                    <td>Desaprobado</td>
-                </tr>
-            </tbody>
-        </table>
+
+        <div class="infoPosTabla">
+            <div class="reprobadosInfo">
+                <h4>ESTUDIANTES REPROBADOS</h4>
+                <p>Los estudiantes con una nota de entre 1 y 4 serán reprobados del semestre.</p>
+                <a href="·"><span>Próximas Inscripciones aqui</span></a>
+            </div>
+            <div class="segundaInstanciaInfo">
+                <h4>SEGUNDA INSTANCIA</h4>
+                <p>Los estudiantes con una nota de 5 o 6 tendrán una segunda oportunidad en la Segunda Instancia.</p>
+                <a href="##"><span>Saber más</span></a>
+            </div>
+        </div>
+
+        <div class="estudiantesAprobados">
+            <h2>ESTUDIANTES APROBADOS</h2>
+            <p>Enhorabuena a todos los estudiantes que obtubieron una nota entre 7 y 10, han aprobado el semestre!
+            <p>Como forma de recompensa, aquellos que se hayan destacado alcanzando la increible nota de 10: tendrán la
+                oportunidad de participar en un proyecto con fines laborales.</p>
+            <p>Consistirá en participar en reuniones profesionales, capacitación en vivo con material PREMIUN y solo los
+                que se destaquen podrán tener su primera experiencia laboral.<br><a href="###">Saber mas</a></p>
+            </p>
+        </div>
     </main>
-
-
-
-
-    <br><br><br><br><br><br>
-
-
 
     <script src="script.js"></script>
 </body>

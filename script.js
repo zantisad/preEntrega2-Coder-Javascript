@@ -1,5 +1,9 @@
-///////////// clase molde para crear cada nombre y nota de estudiante ///////////
 
+// Arrays vacios donde vamos a guardar todos los aprobados y desaprobados dependiendo la nota , lo hago por fuera para poder acceder mas delante desde cualquier parte del codigo
+let siAprobados = [];   // nota > 6
+let noAprobados = [];   // nota <= 6
+
+//////////// clase molde para crear cada nombre, apellido y nota de estudiante ///////////
 class Estudiante {
     constructor(nombre, apellido, nota) {
         this.nombre = nombre;
@@ -8,7 +12,7 @@ class Estudiante {
     }
 
     comprobarSiAprueba() {     // automatizar la comprobacion de si aprobaron o 
-        if (this.nota > 5) {    // desaprobaron y mandarlos al array correspondiente 
+        if (this.nota > 6) {    // desaprobaron y mandarlos al array correspondiente 
             siAprobados.push(this)
         } else {
             noAprobados.push(this)
@@ -25,131 +29,208 @@ class Estudiante {
     }
 }
 
-//arrays vacios donde vamos a guardar todos los aprobados y desaprobados dependiendo la nota 
-let siAprobados = [];   // nota > 5
-let noAprobados = [];   // nota <= 5
+//array donde vamos a guardar todos los nombres y estudiantes
+let estudiantes = JSON.parse(localStorage.getItem('Usuarios')) || [];
 
-//creacion de estudiantes y sus notas
-let alum1 = new Estudiante("Jose", "Fernandez", 7);
-let alum2 = new Estudiante("Miguel", "Rodriguez", 6);
-let alum3 = new Estudiante("Ana", "Perez", 9);
-let alum4 = new Estudiante("Pedro", "Etcheverri", 8);
-let alum5 = new Estudiante("Luisa", "Caballero", 5);
-let alum6 = new Estudiante("Sofía", "Baiz", 9);
-let alum7 = new Estudiante("Carlos", "Dos Santos", 6);
-let alum8 = new Estudiante("María", "De Leon", 7);
-let alum9 = new Estudiante("Juan", "Arias", 8);
-let alum10 = new Estudiante("Laura", "Altamiranda", 4);
-let alum11 = new Estudiante("Jorge", "Ferraro", 5);
+    addEventListeners();
+    function addEventListeners() {
+        document.addEventListener('DOMContentLoaded', () => {
+            for (let i = 0; i < estudiantes.length; i++ ) {
 
-////////////// interactividad con el usuario //////////////////
+                let tabla = document.getElementById("miTabla").getElementsByTagName("tbody")[0];  // llamar al tbody de la tabla
+                let fila = tabla.insertRow();     // Insertar fila en la tabla
+            
+                let nombreCelda = fila.insertCell(0);     // Agregar celda en la posicion 0 
+                let apellidoCelda = fila.insertCell(1);   // Agregar celda en la posicion 1
+                let notaCelda = fila.insertCell(2);       // Agregar celda en la posicion 2 
+                let aprobacion = fila.insertCell(3)       // Agregar celda en la posicion 3 
+            
+                // A estas celdas le ponemos el contenido que haya ingresado el ususario.
+                nombreCelda.textContent = estudiantes[i].nombre;
+                apellidoCelda.textContent = estudiantes[i].apellido;
+                notaCelda.textContent = estudiantes[i].nota;
+            
+                // A la Celda de aprobacion la rellenamos con "Aprobado" p "Desaprobado" dependiendo la nota 
+                aprobacion.textContent = (estudiantes[i].nota >= 7) ? "Aprobado" : "Desaprobado";
 
-//pedirle al usuario su nombre 
-let miNombre;
-do {
-    miNombre = prompt("Cual es tu nombre?")
-} while (!(/^[a-zA-Z]+$/.test(miNombre))) //que permita solo letras
+                if (estudiantes[i].nota >= 7) {
+                    aprobacion.style.backgroundColor = "#5dff93";
+                } else {
+                    aprobacion.style.backgroundColor = "#fd3333";
+                };
+        }})
+    }
+    
 
-//pedirle al usuario su apellido 
-let miApellido;
-do {
-    miApellido = prompt("Cual es tu apellido?")
-} while (!(/^[a-zA-Z]+$/.test(miApellido))) //que permita solo letras
-
-//pedirle al usuario su nota
-let miNota;
-do {
-    miNota = Number(prompt("Cual fue tu nota? (1-10)"))
-} while (miNota > 10 || miNota < 1 || isNaN(miNota) || (parseInt(miNota) != miNota))
-//verificar que sea una nota valida
-
-//creo una variable "yo" donde guardo mi nombre y mi nota
-let yo = new Estudiante(miNombre, miApellido, miNota);
+console.log(estudiantes)
 
 
-//array vacio donde vamos a guardar todos los nombres y estudiantes
-let estudiantes = [alum1, alum2, alum3, alum4, alum5, alum6, alum7, alum8, alum9, alum10, alum11, yo]
+
+// Funcion para iniciar todos las funcioones internas, esta funcion se inicia cuando el usuario le da click al boton "CONFIRMAR" y agrega su nota al cuadro, a partir de ahi se generan los resultados de por ejemplo: Mejor Nota, Peor Nota, Promedio de notas, etc.
+let funcionInicio = document.getElementById("botonAgregar");
+funcionInicio.addEventListener("click", (event) => {
+    event.preventDefault();
+    FuncionDeInicio();
+
+})
+function FuncionDeInicio() { //funcion asociada al boton de "CONFIRMAR"
+
+    let recuadroInfoGeneral = document.getElementById("recuadroInfoGeneral");
+    recuadroInfoGeneral.style.display = "block";
+    
 
 
-/////// hallar el promedio de todas las notas ///////////
-
-function hallarPromedioDeTodasLasNotas() {
-    let sumaDeNotas = 0;
-
-    for (let i = 0; i < estudiantes.length; i++) {
-        sumaDeNotas += estudiantes[i].nota;
+    let inputNombre = document.getElementById("inputNombre").value;      // Guardo el nombre ingresado en el input
+    let inputApellido = document.getElementById("inputApellido").value;  // Guardo el apellido ingresado en el input
+    let inputNota = document.getElementById("inputNota").value;          // Guardo la nota ingresada en el input
+    // Validar que se hayan ingresado todos los campos
+    if (inputNombre === "" || inputApellido === "" || inputNota === "") {
+        let mensajeError = document.getElementById("mensajeError");
+        mensajeError.textContent = "Por favor, complete de forma correcta todos los campos del formulario.";
+        mensajeError.style.color = "red";
+        return;
     }
 
-    let promedio = sumaDeNotas / estudiantes.length;
+    inputNota = parseInt(inputNota);   // convertir la nota ingresada por el ususario en un Entero
 
-    return promedio;
+    // Validar que la nota esté dentro del rango permitido
+    if (isNaN(inputNota) || inputNota < 1 || inputNota > 10) {
+        let mensajeError = document.getElementById("mensajeError");
+        mensajeError.textContent = "La nota debe ser un número entre 1 y 10.";
+        mensajeError.style.color = "red";
+        return;
+    }
+
+    let mensajeError = document.getElementById("mensajeError");
+    mensajeError.style.color = "green";
+    mensajeError.textContent = "Añadido correctamente";
+
+
+    /////////////////////////////////////////////////////////////////////////
+
+
+    
+
+
+    // Agregar valores a la tabla
+    let tabla = document.getElementById("miTabla").getElementsByTagName("tbody")[0];  // llamar al tbody de la tabla
+    let fila = tabla.insertRow();     // Insertar fila en la tabla
+
+    let nombreCelda = fila.insertCell(0);     // Agregar celda en la posicion 0 
+    let apellidoCelda = fila.insertCell(1);   // Agregar celda en la posicion 1
+    let notaCelda = fila.insertCell(2);       // Agregar celda en la posicion 2 
+    let aprobacion = fila.insertCell(3)       // Agregar celda en la posicion 3 
+
+    // A estas celdas le ponemos el contenido que haya ingresado el ususario.
+    nombreCelda.textContent = inputNombre;
+    apellidoCelda.textContent = inputApellido;
+    notaCelda.textContent = inputNota;
+
+    // A la Celda de aprobacion la rellenamos con "Aprobado" p "Desaprobado" dependiendo la nota 
+    aprobacion.textContent = (inputNota >= 7) ? "Aprobado" : "Desaprobado";
+
+    if (inputNota >= 7) {
+        aprobacion.style.backgroundColor = "#5dff93";
+    } else {
+        aprobacion.style.backgroundColor = "#fd3333";
+    }
+
+    // Guardamos en una variable mediante la clase "Estudiante" los datos ingresados por el usuario 
+    estudiantes[estudiantes.length] = new Estudiante(inputNombre, inputApellido, parseInt(inputNota));
+
+/*     ({nombre: inputNombre,apellido: inputApellido, nota: inputNota, });    // Enviamos los datos del usuario a la array de estudiantes
+/*     yo.comprobarSiAprueba() */; // Ejecutamos la funcion para enviar al usuario al array de siAprobados o de noAprobados  */
+
+    // Reseteamos el valor de todos los inputs para que queden vacios una vez se aprete el boton de CONFIRMAR
+    document.getElementById("inputNombre").value = "";
+    document.getElementById("inputApellido").value = "";
+    document.getElementById("inputNota").value = "";
+
+    
+    // Guardamos los datos del usuario en el LocalStorage
+    localStorage.setItem("Usuarios",JSON.stringify(estudiantes));
+
+    let usuariosJSON = JSON.parse(localStorage.getItem('Usuarios')); // Llamamos al usuario convirtiendolo de cadena de texto a Objecto
+    console.log(usuariosJSON); // Lo mostrramos en la consola 
+
 }
+    ///////////////// Funcion para enocntrar el mejor estudiante /////////////////////
 
-console.log("################ INFO GENERAL ################")
-const promedio = hallarPromedioDeTodasLasNotas();
-console.log(`La nota promedio de los ${estudiantes.length} estudiantes fue de: ${promedio.toFixed(1)}`)
+    function encontrarElMejorEstudiante() {
+        let mejorEstudiante;
+        let mejorNota = 0;
 
-
-
-/////Enocntrar el mejor estudiante y hacer un consol log con su nombre y su nota/////
-
-function encontrarElMejorEstudiante() {
-    let mejorEstudiante;
-    let mejorNota = 0;
-
-    for (let i = 0; i < estudiantes.length; i++) {
-        if (estudiantes[i].nota > mejorNota) {
-            mejorNota = estudiantes[i].nota;
-            mejorEstudiante = estudiantes[i];
+        // bucle para recorrer cada nota de cada estudiante y guardar al mejor estudiante en "mejorNota"
+        for (let i = 0; i < estudiantes.length; i++) {
+            if (estudiantes[i].nota >= mejorNota) {
+                mejorNota = estudiantes[i].nota;
+                mejorEstudiante = estudiantes[i];
+            }
         }
+
+        return mejorEstudiante;
     }
+    const mejorEstudiante = encontrarElMejorEstudiante();   // El resultante al mejor Estudiante lo guardo en una variable "mejorEstudiante"
+     // Guardamos los datos del usuario en el LocalStorage
+     localStorage.setItem("mejorEstudiante",JSON.stringify(mejorEstudiante));
 
-    return mejorEstudiante;
-}
-
-const mejorEstudiante = encontrarElMejorEstudiante();
-console.log(`El/la mejor estudiante/a fue ${mejorEstudiante.nombre} ${mejorEstudiante.apellido} con una nota de ${mejorEstudiante.nota}`);
+     let mejorEstudianteJSON = JSON.parse(localStorage.getItem('mejorEstudiante')); // Llamamos al usuario convirtiendolo de cadena de texto a Objecto
+     console.log(mejorEstudianteJSON); // Lo mostrramos en la consola 
 
 
 
-/////Enocntrar el peor estudiante y hacer un consol log con su nombre y su nota/////
+    ///////////////// Funcion para enocntrar el peor estudiante /////////////////////
+    function encontrarElPeorEstudiante() {
+        let peorEstudiante;
+        let peorNota = 10;
 
-function encontrarElPeorEstudiante() {
-    let peorEstudiante;
-    let peorNota = 10;
-
-    for (let i = 0; i < estudiantes.length; i++) {
-        if (estudiantes[i].nota < peorNota) {
-            peorNota = estudiantes[i].nota;
-            peorEstudiante = estudiantes[i];
+        // bucle para recorrer cada nota de cada estudiante y guardar el peor estudiante en "peorNota"
+        for (let i = 0; i < estudiantes.length; i++) {
+            if (estudiantes[i].nota <= peorNota) {
+                peorNota = estudiantes[i].nota;
+                peorEstudiante = estudiantes[i];
+            }
         }
+
+        return peorEstudiante;
     }
-
-    return peorEstudiante;
-}
-
-const peorEstudiante = encontrarElPeorEstudiante();
-console.log(`El/la peor estudiante/a fue ${peorEstudiante.nombre} ${peorEstudiante.apellido} con una nota de ${peorEstudiante.nota}`);
+    const peorEstudiante = encontrarElPeorEstudiante(); // El resultante al peor Estudiante lo guardo en una variable "peorEstudiante"
 
 
+    ///////////////// Funcion para enocntrar el promedio de todas las notas /////////////////////
+    function hallarPromedioDeTodasLasNotas() {
+        let sumaDeNotas = 0;
 
-// MOSTRAR ARRAYS DE APROBADOS Y DESAPROBADOS
+        // bucle para recorrer cada nota de cada estudiante y guardarla en "sumaDeNotas"
+        for (let i = 0; i < estudiantes.length; i++) {
+            sumaDeNotas += estudiantes[i].nota;
+        }
 
-alum1.comprobarSiAprueba();
-alum2.comprobarSiAprueba();
-alum3.comprobarSiAprueba();
-alum4.comprobarSiAprueba();
-alum5.comprobarSiAprueba();  // ejecutar la funcion en cada uno
-alum6.comprobarSiAprueba();  // para enviarlos
-alum7.comprobarSiAprueba();  // al array correspondiente
-alum8.comprobarSiAprueba();  // (siAprobados o noAprobados)
-alum9.comprobarSiAprueba();
-alum10.comprobarSiAprueba();
-alum11.comprobarSiAprueba();
-yo.comprobarSiAprueba();
+        // creo una variable para guardar el resultado
+        let promedio = sumaDeNotas / estudiantes.length;
+
+        return promedio;
+    }
+    const promedio = hallarPromedioDeTodasLasNotas(); // El numero resultante del promedio los guardo en una variable "promedio"
+
+    let notapromedio = document.getElementById("notapromedio"); //llamar al apartado en el HTML que contiene la respuesta a la nota promedio
+    let mejorestudiante = document.getElementById("mejorestudiante"); //llamar al apartado en el HTML que contiene la respuesta al mejor estudiante
+    let peorestudiante = document.getElementById("peorestudiante"); //llamar al apartado en el HTML que contiene la respuesta al peor estudiante
+
+    // A ese apartado en el HTML que llamamos lo rellenamos segun los datos que haya ingresado el usuario
+    if (estudiantes.length === 1) {
+        notapromedio.innerHTML = `- La nota promedio estará disponible al agregar 2 o mas estudiantes`
+    } else {
+        notapromedio.innerHTML = `- La nota promedio de los <strong>${estudiantes.length}</strong> estudiantes fue de: <strong>${promedio.toFixed(1)}</strong>`
+    }
+    mejorestudiante.innerHTML = `- El/la mejor estudiante/a fue <strong>${mejorEstudiante.nombre} ${mejorEstudiante.apellido}</strong> con una nota de <strong>${mejorEstudiante.nota}</strong>`
+    peorestudiante.innerHTML = `- El/la peor estudiante fue <strong>${peorEstudiante.nombre} ${peorEstudiante.apellido}</strong> con una nota de <strong>${peorEstudiante.nota}</strong>`
 
 
-console.log('################ La lista de alumnos que aprobaron son: ################');
-siAprobados.forEach((estudiante) => console.log(`Nombre: ${estudiante.nombre} ${estudiante.apellido} - Nota: ${estudiante.nota}`))
-console.log('################ La lista de alumnos que desaprobaron son: ################');
-noAprobados.forEach((estudiante) => console.log(`Nombre: ${estudiante.nombre} ${estudiante.apellido} - Nota: ${estudiante.nota}`));
+    let nuevoEstudiante = document.getElementById("nuevoEstudiante");
+    nuevoEstudiante.innerHTML = `Agrega un nuevo estudiante`
+
+
+
+
+

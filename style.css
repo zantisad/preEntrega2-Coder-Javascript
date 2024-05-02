@@ -1,50 +1,279 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lilita+One&family=Lunasima:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 * {
     margin: 0;
-    font-family: "Lunasima", sans-serif;
-
+    font-family: "Poppins", sans-serif;
 }
 
-body {
-    background-color: #f7f5f5;
+main {
+    background-color: white;
+    width: 98%;
+    margin: auto;
 }
 
 .titulo {
     text-align: center;
     padding: 25px;
+    padding-bottom: 5px;
 }
 
+
 .recuadroInfoGeneral {
+    display: none;
     text-align: center;
+    margin-top: 18px;
 }
 
 .recuadroInfoDatos {
+    width: 80%;
     padding: 6px;
+    margin: auto;
+    text-align: left;
 }
 
 .recuadroInfoDatos p {
-    margin: 2px;
+    margin: 2px 2px 2px 20px;
+    padding: 3px;
 }
 
 table {
     margin: 10px;
-    width: 100%;
+    margin-top: 10px;
+    width: 95%;
     font-size: 13px;
     border-collapse: collapse;
     font-weight: bold;
 }
 
+
 table th {
-    text-align: left;
+    text-align: center;
     color: white;
-    background-color: rgb(51, 209, 51);
+    background-color: #50C878;
+    padding: 6px;
 }
 
-table td,td {
+table td,
+td {
     border-bottom: 1px solid #ddd;
+    padding: 3px;
+    text-align: center;
 }
 
 tr:nth-child(even) {
     background-color: #f0eaea;
 }
+
+.infoPosTabla {
+    display: flex;
+    padding: 10px;
+}
+
+.reprobadosInfo,
+.segundaInstanciaInfo {
+    margin: 12px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.reprobadosInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border: 2px solid rgb(228, 32, 32);
+    border-left: 10px solid rgb(228, 32, 32);
+}
+
+.reprobadosInfo h4 {
+    margin-bottom: 7px;
+}
+
+.reprobadosInfo p {
+    margin-bottom: 7px;
+}
+
+.reprobadosInfo span {
+    font-size: 13px;
+}
+
+
+.segundaInstanciaInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border: 2px solid rgb(240, 243, 36);
+    border-left: 10px solid rgb(240, 243, 36);
+}
+
+.segundaInstanciaInfo h4 {
+    margin-bottom: 7px;
+}
+
+.segundaInstanciaInfo p {
+    margin-bottom: 7px;
+}
+
+.segundaInstanciaInfo span {
+    font-size: 13px;
+}
+
+
+
+
+.estudiantesAprobados {
+    text-align: center;
+    margin: 10px;
+    border-left: 5px solid rgb(61, 231, 18);
+    border-radius: 8px;
+    border-bottom-left-radius: 30px;
+}
+
+.estudiantesAprobados h2 {
+    background-color: rgb(61, 231, 18);
+}
+
+.estudiantesAprobados p {
+    text-align: center;
+    padding: 3px;
+    margin: 2px 7px;
+}
+
+.miNota input[type="number"],
+button {
+    width: 10%;
+}
+
+p {
+    font-size: 13px;
+}
+
+.miNota form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+}
+
+.nombreApellido {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+}
+
+.notaEnviar {
+    display: flex;
+    margin: auto;
+    width: 80%;
+    justify-content: center;
+}
+
+input[type="number"],
+button {
+    width: 35% !important;
+}
+
+#verificacion {
+    text-align: center;
+    color: red;
+}
+
+.tuNotaTitulo {
+    text-align: center;
+    margin: 10px;
+}
+
+
+
+
+/* APARTADO RESPONSIVE MOBILE */
+@media screen and (max-width: 700px) {
+    .titulo {
+        font-size: 12px;
+    }
+
+    .recuadroInfoDatos {
+        width: 85%;
+        padding: 6px;
+        margin: auto;
+        text-align: left;
+    }
+
+    table {
+        font-size: 10px;
+    }
+
+    .reprobadosInfo {
+        margin-right: 0px;
+        text-align: center;
+        padding: 5px;
+        border-radius: 15px;
+    }
+
+    .reprobadosInfo h4 {
+        font-size: 14px;
+    }
+
+    .reprobadosInfo p {
+        font-size: 13px;
+    }
+
+    .reprobadosInfo span {
+        font-size: 11px;
+    }
+
+    .segundaInstanciaInfo {
+        margin-right: 0px;
+        text-align: center;
+        padding: 5px;
+        border-radius: 15px;
+    }
+
+    .segundaInstanciaInfo h4 {
+        font-size: 14px;
+    }
+
+    .segundaInstanciaInfo p {
+        font-size: 13px;
+    }
+
+    .segundaInstanciaInfo span {
+        font-size: 11px;
+    }
+}
+
+@media screen and (min-width: 700px) {
+    main {
+        width: 700px;
+        margin: auto;
+    }
+}
+
+
+.mensajeError {
+    color: red;
+    font-size: small;
+    margin: auto;
+    font-weight: 900;
+    padding: .6rem;
+}
+
+#inputNombre,
+#inputApellido,
+#inputNota,
+#botonAgregar {
+    padding: .2re;
+    padding-left: .4rem;
+    margin: .2rem;
+    border: none;
+    box-shadow: 0 0 4px .4px rgb(0, 0, 0, .5);
+    border-radius: 2px;
+
+}
+
+::placeholder {
+    font-family: "Poppins", sans-serif;
+    color: #;
+}
+
