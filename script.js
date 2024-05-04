@@ -1,4 +1,3 @@
-
 // Arrays vacios donde vamos a guardar todos los aprobados y desaprobados dependiendo la nota , lo hago por fuera para poder acceder mas delante desde cualquier parte del codigo
 let siAprobados = [];   // nota > 6
 let noAprobados = [];   // nota <= 6
@@ -29,56 +28,16 @@ class Estudiante {
     }
 }
 
-//array donde vamos a guardar todos los nombres y estudiantes
-let estudiantes = JSON.parse(localStorage.getItem('Usuarios')) || [];
-
-    addEventListeners();
-    function addEventListeners() {
-        document.addEventListener('DOMContentLoaded', () => { // lo ejecutamos al iniciar la pagina para cargar el LocalSorage y que este se agregue a la tabla
-            for (let i = 0; i < estudiantes.length; i++ ) {
-
-                let tabla = document.getElementById("miTabla").getElementsByTagName("tbody")[0];  // llamar al tbody de la tabla
-                let fila = tabla.insertRow();     // Insertar fila en la tabla
-            
-                let nombreCelda = fila.insertCell(0);     // Agregar celda en la posicion 0 
-                let apellidoCelda = fila.insertCell(1);   // Agregar celda en la posicion 1
-                let notaCelda = fila.insertCell(2);       // Agregar celda en la posicion 2 
-                let aprobacion = fila.insertCell(3)       // Agregar celda en la posicion 3 
-            
-                // A estas celdas le ponemos el contenido que haya ingresado el ususario.
-                nombreCelda.textContent = estudiantes[i].nombre;
-                apellidoCelda.textContent = estudiantes[i].apellido;
-                notaCelda.textContent = estudiantes[i].nota;
-            
-                // A la Celda de aprobacion la rellenamos con "Aprobado" p "Desaprobado" dependiendo la nota 
-                aprobacion.textContent = (estudiantes[i].nota >= 7) ? "Aprobado" : "Desaprobado";
-
-                if (estudiantes[i].nota >= 7) {
-                    aprobacion.style.backgroundColor = "#5dff93";
-                } else {
-                    aprobacion.style.backgroundColor = "#fd3333";
-                };
-        }})
-    }
-    
-
-console.log(estudiantes)
+let estudiantes = ExtraerUsuarios();
 
 
+/////////////////////////////////  FUNCIONES  ////////////////////////////////////// 
 
-// Funcion para iniciar todos las funcioones internas, esta funcion se inicia cuando el usuario le da click al boton "CONFIRMAR" y agrega su nota al cuadro, a partir de ahi se generan los resultados de por ejemplo: Mejor Nota, Peor Nota, Promedio de notas, etc.
-let funcionInicio = document.getElementById("botonAgregar");
-funcionInicio.addEventListener("click", (event) => {
-    event.preventDefault();
-    FuncionDeInicio();
+function ExtraerUsuarios() {
+    return JSON.parse(localStorage.getItem('Usuarios')) || [];
+}
 
-})
 function FuncionDeInicio() { //funcion asociada al boton de "CONFIRMAR"
-
-    let recuadroInfoGeneral = document.getElementById("recuadroInfoGeneral");
-    recuadroInfoGeneral.style.display = "block";
-    
-
 
     let inputNombre = document.getElementById("inputNombre").value;      // Guardo el nombre ingresado en el input
     let inputApellido = document.getElementById("inputApellido").value;  // Guardo el apellido ingresado en el input
@@ -91,7 +50,7 @@ function FuncionDeInicio() { //funcion asociada al boton de "CONFIRMAR"
         return;
     }
 
-    inputNota = parseInt(inputNota);   // convertir la nota ingresada por el ususario en un Entero
+    inputNota = parseInt(inputNota);// convertir la nota ingresada por el ususario en un Entero
 
     // Validar que la nota esté dentro del rango permitido
     if (isNaN(inputNota) || inputNota < 1 || inputNota > 10) {
@@ -140,16 +99,52 @@ function FuncionDeInicio() { //funcion asociada al boton de "CONFIRMAR"
     document.getElementById("inputApellido").value = "";
     document.getElementById("inputNota").value = "";
 
-    
+
     // Guardamos los datos del usuario en el LocalStorage
-    localStorage.setItem("Usuarios",JSON.stringify(estudiantes));
+    localStorage.setItem("Usuarios", JSON.stringify(estudiantes));
 
     let usuariosJSON = JSON.parse(localStorage.getItem('Usuarios')); // Llamamos al usuario convirtiendolo de cadena de texto a Objecto
     console.log(usuariosJSON); // Lo mostrramos en la consola 
 
-}
-    ///////////////// Funcion para enocntrar el mejor estudiante /////////////////////
+    ExtraerUsuarios();
+    calcularDatos()
 
+}
+
+function addEventListeners() {
+
+    ExtraerUsuarios();
+
+    // lo ejecutamos al iniciar la pagina para cargar el LocalSorage y que este se agregue a la tabla
+    for (let i = 0; i < estudiantes.length; i++) {
+
+        let tabla = document.getElementById("miTabla").getElementsByTagName("tbody")[0];  // llamar al tbody de la tabla
+        let fila = tabla.insertRow();     // Insertar fila en la tabla
+
+        let nombreCelda = fila.insertCell(0);     // Agregar celda en la posicion 0 
+        let apellidoCelda = fila.insertCell(1);   // Agregar celda en la posicion 1
+        let notaCelda = fila.insertCell(2);       // Agregar celda en la posicion 2 
+        let aprobacion = fila.insertCell(3)       // Agregar celda en la posicion 3 
+
+        // A estas celdas le ponemos el contenido que haya ingresado el ususario.
+        nombreCelda.textContent = estudiantes[i].nombre;
+        apellidoCelda.textContent = estudiantes[i].apellido;
+        notaCelda.textContent = estudiantes[i].nota;
+
+        // A la Celda de aprobacion la rellenamos con "Aprobado" p "Desaprobado" dependiendo la nota 
+        aprobacion.textContent = (estudiantes[i].nota >= 7) ? "Aprobado" : "Desaprobado";
+
+        if (estudiantes[i].nota >= 7) {
+            aprobacion.style.backgroundColor = "#5dff93";
+        } else {
+            aprobacion.style.backgroundColor = "#fd3333";
+        };
+    }
+}
+
+function calcularDatos() {
+
+    ///////////////// Funcion para enocntrar el mejor estudiante /////////////////////
     function encontrarElMejorEstudiante() {
         let mejorEstudiante;
         let mejorNota = 0;
@@ -164,14 +159,8 @@ function FuncionDeInicio() { //funcion asociada al boton de "CONFIRMAR"
 
         return mejorEstudiante;
     }
-    const mejorEstudiante = encontrarElMejorEstudiante();   // El resultante al mejor Estudiante lo guardo en una variable "mejorEstudiante"
-     // Guardamos los datos del usuario en el LocalStorage
-     localStorage.setItem("mejorEstudiante",JSON.stringify(mejorEstudiante));
 
-     let mejorEstudianteJSON = JSON.parse(localStorage.getItem('mejorEstudiante')); // Llamamos al usuario convirtiendolo de cadena de texto a Objecto
-     console.log(mejorEstudianteJSON); // Lo mostrramos en la consola 
-
-
+    let mejorEstudiante = encontrarElMejorEstudiante();
 
     ///////////////// Funcion para enocntrar el peor estudiante /////////////////////
     function encontrarElPeorEstudiante() {
@@ -190,8 +179,7 @@ function FuncionDeInicio() { //funcion asociada al boton de "CONFIRMAR"
     }
     const peorEstudiante = encontrarElPeorEstudiante(); // El resultante al peor Estudiante lo guardo en una variable "peorEstudiante"
 
-
-    ///////////////// Funcion para enocntrar el promedio de todas las notas /////////////////////
+    /////////////// Funcion para enocntrar el promedio de todas las notas //////////////////
     function hallarPromedioDeTodasLasNotas() {
         let sumaDeNotas = 0;
 
@@ -211,15 +199,40 @@ function FuncionDeInicio() { //funcion asociada al boton de "CONFIRMAR"
     let mejorestudiante = document.getElementById("mejorestudiante"); //llamar al apartado en el HTML que contiene la respuesta al mejor estudiante
     let peorestudiante = document.getElementById("peorestudiante"); //llamar al apartado en el HTML que contiene la respuesta al peor estudiante
 
-    // A ese apartado en el HTML que llamamos lo rellenamos segun los datos que haya ingresado el usuario
-    if (estudiantes.length === 1) {
-        notapromedio.innerHTML = `- La nota promedio estará disponible al agregar 2 o mas estudiantes`
+    if (estudiantes.length === 0) {
+        let recuadroInfoGeneral = document.getElementById("recuadroInfoGeneral");
+        recuadroInfoGeneral.style.display = "none"
     } else {
-        notapromedio.innerHTML = `- La nota promedio de los <strong>${estudiantes.length}</strong> estudiantes fue de: <strong>${promedio.toFixed(1)}</strong>`
+        recuadroInfoGeneral.style.display = "block"
+
+        // A ese apartado en el HTML que llamamos lo rellenamos segun los datos que haya ingresado el usuario
+        if (estudiantes.length === 1) {
+            notapromedio.innerHTML = `- La nota promedio estará disponible al agregar 2 o mas estudiantes`
+        } else {
+            notapromedio.innerHTML = `- La nota promedio de los <strong>${estudiantes.length}</strong> estudiantes fue de: <strong>${promedio.toFixed(1)}</strong>`
+        }
+        mejorestudiante.innerHTML = `- El/la mejor estudiante/a fue <strong>${mejorEstudiante.nombre} ${mejorEstudiante.apellido}</strong> con una nota de <strong>${mejorEstudiante.nota}</strong>`
+        peorestudiante.innerHTML = `- El/la peor estudiante fue <strong>${peorEstudiante.nombre} ${peorEstudiante.apellido}</strong> con una nota de <strong>${peorEstudiante.nota}</strong>`
     }
-    mejorestudiante.innerHTML = `- El/la mejor estudiante/a fue <strong>${mejorEstudiante.nombre} ${mejorEstudiante.apellido}</strong> con una nota de <strong>${mejorEstudiante.nota}</strong>`
-    peorestudiante.innerHTML = `- El/la peor estudiante fue <strong>${peorEstudiante.nombre} ${peorEstudiante.apellido}</strong> con una nota de <strong>${peorEstudiante.nota}</strong>`
 
 
     let nuevoEstudiante = document.getElementById("nuevoEstudiante");
-    nuevoEstudiante.innerHTML = `Agrega un nuevo estudiante`
+    nuevoEstudiante.innerHTML = `Agrega un nuevo estudiante`;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+
+// Funcion para iniciar todos las funcioones internas, esta funcion se inicia cuando el usuario le da click al boton "CONFIRMAR" y agrega su nota al cuadro, a partir de ahi se generan los resultados de por ejemplo: Mejor Nota, Peor Nota, Promedio de notas, etc.
+
+let funcionInicio = document.getElementById("botonAgregar");
+funcionInicio.addEventListener("click", () => {
+    FuncionDeInicio();
+})
+
+addEventListeners();
+calcularDatos();
+
+
+
+
