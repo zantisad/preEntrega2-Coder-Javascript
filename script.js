@@ -28,16 +28,17 @@ class Estudiante {
     }
 }
 
-let estudiantes = ExtraerUsuarios();
+let estudiantes = ExtraerUsuarios();  // Creo la variable donde guardare a todos los estudiantes
 
 
-/////////////////////////////////  FUNCIONES  ////////////////////////////////////// 
+/////////////////////////////////////  FUNCIONES  ////////////////////////////////////////// 
+
 
 function ExtraerUsuarios() {
-    return JSON.parse(localStorage.getItem('Usuarios')) || [];
+    return JSON.parse(localStorage.getItem('Usuarios')) || [];  // Guardamos en la variable los estudiantes que esten guardados en el Localstorage y si no lo iniciamos vacio
 }
 
-function FuncionDeInicio() { //funcion asociada al boton de "CONFIRMAR"
+function FuncionDeInicio() {   //funcion asociada al boton de "CONFIRMAR"
 
     let inputNombre = document.getElementById("inputNombre").value;      // Guardo el nombre ingresado en el input
     let inputApellido = document.getElementById("inputApellido").value;  // Guardo el apellido ingresado en el input
@@ -111,11 +112,11 @@ function FuncionDeInicio() { //funcion asociada al boton de "CONFIRMAR"
 
 }
 
-function addEventListeners() {
+function addEventListeners() {     // lo ejecutamos al iniciar la pagina para cargar el LocalSorage y que este se agregue a la tabla
 
     ExtraerUsuarios();
 
-    // lo ejecutamos al iniciar la pagina para cargar el LocalSorage y que este se agregue a la tabla
+
     for (let i = 0; i < estudiantes.length; i++) {
 
         let tabla = document.getElementById("miTabla").getElementsByTagName("tbody")[0];  // llamar al tbody de la tabla
@@ -142,7 +143,7 @@ function addEventListeners() {
     }
 }
 
-function calcularDatos() {
+function calcularDatos() {    // Lo ejecutamos al iniciar la pagina para cargar todos los datos de (mejorEstudiante, peorEstudiante y Promedio)
 
     ///////////////// Funcion para enocntrar el mejor estudiante /////////////////////
     function encontrarElMejorEstudiante() {
@@ -220,18 +221,16 @@ function calcularDatos() {
     nuevoEstudiante.innerHTML = `Agrega un nuevo estudiante`;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
-
-
-// Funcion para iniciar todos las funcioones internas, esta funcion se inicia cuando el usuario le da click al boton "CONFIRMAR" y agrega su nota al cuadro, a partir de ahi se generan los resultados de por ejemplo: Mejor Nota, Peor Nota, Promedio de notas, etc.
-
+// Funcion para iniciar todos las funcioones internas, esta funcion se inicia cuando el usuario le da click al boton "CONFIRMAR" y agrega su nota al cuadro, a partir de ahi se actualizan los resultados de por ejemplo: Mejor Nota, Peor Nota, Promedio de notas, etc.
 let funcionInicio = document.getElementById("botonAgregar");
 funcionInicio.addEventListener("click", () => {
     FuncionDeInicio();
 })
 
-addEventListeners();
-calcularDatos();
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+addEventListeners();  // lo primeros que hacemos en iniciar esta funcion
+calcularDatos();      // seguido a eso calculamos todos los datos
 
 
 
