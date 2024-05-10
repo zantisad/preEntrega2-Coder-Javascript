@@ -262,17 +262,12 @@ button {
 #inputNombre,
 #inputApellido,
 #inputNota,
-#botonAgregar {
-    padding: .2re;
+#botonAgregar,
+#botonLimpiarTodo {
+    padding: .2rem;
     padding-left: .4rem;
     margin: .2rem;
     border: none;
     box-shadow: 0 0 4px .4px rgb(0, 0, 0, .5);
     border-radius: 2px;
-
-}
-
-::placeholder {
-    font-family: "Poppins", sans-serif;
-    color: #;
 }

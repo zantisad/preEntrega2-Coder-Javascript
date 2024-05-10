@@ -31,7 +31,9 @@ class Estudiante {
 let estudiantes = ExtraerUsuarios();  // Creo la variable donde guardare a todos los estudiantes
 
 
+
 /////////////////////////////////////  FUNCIONES  ////////////////////////////////////////// 
+
 
 
 function ExtraerUsuarios() {
@@ -92,9 +94,6 @@ function FuncionDeInicio() {   //funcion asociada al boton de "CONFIRMAR"
     // Guardamos en una variable mediante la clase "Estudiante" los datos ingresados por el usuario 
     estudiantes[estudiantes.length] = new Estudiante(inputNombre, inputApellido, parseInt(inputNota));
 
-/*     ({nombre: inputNombre,apellido: inputApellido, nota: inputNota, });    // Enviamos los datos del usuario a la array de estudiantes
-/*     yo.comprobarSiAprueba() */; // Ejecutamos la funcion para enviar al usuario al array de siAprobados o de noAprobados  */
-
     // Reseteamos el valor de todos los inputs para que queden vacios una vez se aprete el boton de CONFIRMAR
     document.getElementById("inputNombre").value = "";
     document.getElementById("inputApellido").value = "";
@@ -109,7 +108,6 @@ function FuncionDeInicio() {   //funcion asociada al boton de "CONFIRMAR"
 
     ExtraerUsuarios();
     calcularDatos()
-
 }
 
 function addEventListeners() {     // lo ejecutamos al iniciar la pagina para cargar el LocalSorage y que este se agregue a la tabla
@@ -220,6 +218,27 @@ function calcularDatos() {    // Lo ejecutamos al iniciar la pagina para cargar 
     let nuevoEstudiante = document.getElementById("nuevoEstudiante");
     nuevoEstudiante.innerHTML = `Agrega un nuevo estudiante`;
 }
+
+//
+function eliminarFilasTabla() {
+    // Eliminar todas las filas de la tabla
+    localStorage.clear();
+
+    let tabla = document.getElementById('miTabla');
+    let rowCount = tabla.rows.length;
+    for (let i = rowCount - 1; i > 0; i--) {
+        tabla.deleteRow(i);
+    }
+
+    estudiantes = [];
+    calcularDatos();
+}
+
+// EVENTO PARA EL BOTON (LIMPIAR TODO)
+document.getElementById("botonLimpiarTodo").addEventListener("click", function (event) {
+    event.preventDefault();
+    eliminarFilasTabla();
+})
 
 // Funcion para iniciar todos las funcioones internas, esta funcion se inicia cuando el usuario le da click al boton "CONFIRMAR" y agrega su nota al cuadro, a partir de ahi se actualizan los resultados de por ejemplo: Mejor Nota, Peor Nota, Promedio de notas, etc.
 let funcionInicio = document.getElementById("botonAgregar");
