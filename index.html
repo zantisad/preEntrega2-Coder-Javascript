@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <meta name="description" content="Page for put a students notes for a teacher">
+    <title>Notas Estudiantes</title>
 </head>
 
 <body>
     <main>
+
         <div class="titulo">
             <h1>CUADRO DE NOTAS FINALES DE LOS ESTUDIANTES</h1>
         </div>
@@ -23,7 +25,7 @@
                         <th>Apellido</th>
                         <th>Nota</th>
                         <th>Estado</th>
-                    </tr 
+                    </tr>
                 </thead>
                 <tbody>
                 </tbody>
@@ -34,20 +36,17 @@
             <h3 id="nuevoEstudiante">Empieza agregando un estudiante</h3>
         </div>
 
-        <div class="miNota">
-            <form action="#">
+        <div class="miNota" id="miNota">
+            <form action="#" novalidate>
                 <div class="nombreApellido">
-                    <input id="inputNombre" type="text" placeholder="Nombre" maxlength="18">
-                    <input id="inputApellido" type="text" placeholder="Apellido" maxlength="18">
+                    <input class="fondoSombraGris" id="inputNombre" type="text" placeholder="Nombre" maxlength="18">
+                    <input class="fondoSombraGris" id="inputApellido" type="text" placeholder="Apellido" maxlength="18">
                 </div>
                 <div class="notaEnviar">
-                    <input id="inputNota" type="number" min="1" max="10" step="1" placeholder="Nota">
-                    <button id="botonLimpiarTodo">LIMPIAR TODO</button>
-                    <button id="botonAgregar">CONFIRMAR</button>
+                    <input class="fondoSombraGris" id="inputNota" type="number" min="1" max="10" step="1" placeholder="Nota">
+                    <button class="fondoSombraGris" id="botonLimpiarTodo">LIMPIAR TODO</button>
+                    <button class="fondoSombraGris" id="botonAgregar">CONFIRMAR</button>
                 </div>
-                <div class="mensajeError" id="mensajeError"></div>
-
-
             </form>
         </div>
 
@@ -61,11 +60,16 @@
         </div>
 
 
+        <div id="publicidad">
+            <p id="textoPublicidad"></p>
+        </div>
+
+
         <div class="infoPosTabla">
             <div class="reprobadosInfo">
                 <h4>ESTUDIANTES REPROBADOS</h4>
                 <p>Los estudiantes con una nota de entre 1 y 4 serán reprobados del semestre.</p>
-                <a href="·"><span>Próximas Inscripciones aqui</span></a>
+                <a href=""><span>Próximas Inscripciones aqui</span></a>
             </div>
             <div class="segundaInstanciaInfo">
                 <h4>SEGUNDA INSTANCIA</h4>
@@ -83,9 +87,16 @@
                 que se destaquen podrán tener su primera experiencia laboral.<br><a href="###">Saber mas</a></p>
             </p>
         </div>
+        
     </main>
 
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="script.js"></script>
+
+
+
 </body>
 
 </html>

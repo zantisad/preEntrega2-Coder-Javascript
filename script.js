@@ -28,118 +28,11 @@ class Estudiante {
     }
 }
 
-let estudiantes = ExtraerUsuarios();  // Creo la variable donde guardare a todos los estudiantes
+let estudiantes = extraerUsuarios();  // Creo la variable donde guardare a todos los estudiantes
 
 
 
 /////////////////////////////////////  FUNCIONES  ////////////////////////////////////////// 
-
-
-
-function ExtraerUsuarios() {
-    return JSON.parse(localStorage.getItem('Usuarios')) || [];  // Guardamos en la variable los estudiantes que esten guardados en el Localstorage y si no lo iniciamos vacio
-}
-
-function FuncionDeInicio() {   //funcion asociada al boton de "CONFIRMAR"
-
-    let inputNombre = document.getElementById("inputNombre").value;      // Guardo el nombre ingresado en el input
-    let inputApellido = document.getElementById("inputApellido").value;  // Guardo el apellido ingresado en el input
-    let inputNota = document.getElementById("inputNota").value;          // Guardo la nota ingresada en el input
-    // Validar que se hayan ingresado todos los campos
-    if (inputNombre === "" || inputApellido === "" || inputNota === "") {
-        let mensajeError = document.getElementById("mensajeError");
-        mensajeError.textContent = "Por favor, complete de forma correcta todos los campos del formulario.";
-        mensajeError.style.color = "red";
-        return;
-    }
-
-    inputNota = parseInt(inputNota);// convertir la nota ingresada por el ususario en un Entero
-
-    // Validar que la nota esté dentro del rango permitido
-    if (isNaN(inputNota) || inputNota < 1 || inputNota > 10) {
-        let mensajeError = document.getElementById("mensajeError");
-        mensajeError.textContent = "La nota debe ser un número entre 1 y 10.";
-        mensajeError.style.color = "red";
-        return;
-    }
-
-    let mensajeError = document.getElementById("mensajeError");
-    mensajeError.style.color = "green";
-    mensajeError.textContent = "Añadido correctamente";
-
-
-    // Agregar valores a la tabla
-    let tabla = document.getElementById("miTabla").getElementsByTagName("tbody")[0];  // llamar al tbody de la tabla
-    let fila = tabla.insertRow();     // Insertar fila en la tabla
-
-    let nombreCelda = fila.insertCell(0);     // Agregar celda en la posicion 0 
-    let apellidoCelda = fila.insertCell(1);   // Agregar celda en la posicion 1
-    let notaCelda = fila.insertCell(2);       // Agregar celda en la posicion 2 
-    let aprobacion = fila.insertCell(3)       // Agregar celda en la posicion 3 
-
-    // A estas celdas le ponemos el contenido que haya ingresado el ususario.
-    nombreCelda.textContent = inputNombre;
-    apellidoCelda.textContent = inputApellido;
-    notaCelda.textContent = inputNota;
-
-    // A la Celda de aprobacion la rellenamos con "Aprobado" p "Desaprobado" dependiendo la nota 
-    aprobacion.textContent = (inputNota >= 7) ? "Aprobado" : "Desaprobado";
-
-    if (inputNota >= 7) {
-        aprobacion.style.backgroundColor = "#5dff93";
-    } else {
-        aprobacion.style.backgroundColor = "#fd3333";
-    }
-
-    // Guardamos en una variable mediante la clase "Estudiante" los datos ingresados por el usuario 
-    estudiantes[estudiantes.length] = new Estudiante(inputNombre, inputApellido, parseInt(inputNota));
-
-    // Reseteamos el valor de todos los inputs para que queden vacios una vez se aprete el boton de CONFIRMAR
-    document.getElementById("inputNombre").value = "";
-    document.getElementById("inputApellido").value = "";
-    document.getElementById("inputNota").value = "";
-
-
-    // Guardamos los datos del usuario en el LocalStorage
-    localStorage.setItem("Usuarios", JSON.stringify(estudiantes));
-
-    let usuariosJSON = JSON.parse(localStorage.getItem('Usuarios')); // Llamamos al usuario convirtiendolo de cadena de texto a Objecto
-    console.log(usuariosJSON); // Lo mostrramos en la consola 
-
-    ExtraerUsuarios();
-    calcularDatos()
-}
-
-function addEventListeners() {     // lo ejecutamos al iniciar la pagina para cargar el LocalSorage y que este se agregue a la tabla
-
-    ExtraerUsuarios();
-
-
-    for (let i = 0; i < estudiantes.length; i++) {
-
-        let tabla = document.getElementById("miTabla").getElementsByTagName("tbody")[0];  // llamar al tbody de la tabla
-        let fila = tabla.insertRow();     // Insertar fila en la tabla
-
-        let nombreCelda = fila.insertCell(0);     // Agregar celda en la posicion 0 
-        let apellidoCelda = fila.insertCell(1);   // Agregar celda en la posicion 1
-        let notaCelda = fila.insertCell(2);       // Agregar celda en la posicion 2 
-        let aprobacion = fila.insertCell(3)       // Agregar celda en la posicion 3 
-
-        // A estas celdas le ponemos el contenido que haya ingresado el ususario.
-        nombreCelda.textContent = estudiantes[i].nombre;
-        apellidoCelda.textContent = estudiantes[i].apellido;
-        notaCelda.textContent = estudiantes[i].nota;
-
-        // A la Celda de aprobacion la rellenamos con "Aprobado" p "Desaprobado" dependiendo la nota 
-        aprobacion.textContent = (estudiantes[i].nota >= 7) ? "Aprobado" : "Desaprobado";
-
-        if (estudiantes[i].nota >= 7) {
-            aprobacion.style.backgroundColor = "#5dff93";
-        } else {
-            aprobacion.style.backgroundColor = "#fd3333";
-        };
-    }
-}
 
 function calcularDatos() {    // Lo ejecutamos al iniciar la pagina para cargar todos los datos de (mejorEstudiante, peorEstudiante y Promedio)
 
@@ -219,6 +112,226 @@ function calcularDatos() {    // Lo ejecutamos al iniciar la pagina para cargar 
     nuevoEstudiante.innerHTML = `Agrega un nuevo estudiante`;
 }
 
+
+function extraerUsuarios() {
+    return JSON.parse(localStorage.getItem('Usuarios')) || [];  // Guardamos en la variable los estudiantes que esten guardados en el Localstorage y si no lo iniciamos vacio
+}
+
+function funcionDeInicio() {   //funcion asociada al boton de "CONFIRMAR"
+
+    let inputNombre = document.getElementById("inputNombre").value;      // Guardo el nombre ingresado en el input
+    let inputApellido = document.getElementById("inputApellido").value;  // Guardo el apellido ingresado en el input
+    let inputNota = document.getElementById("inputNota").value;          // Guardo la nota ingresada en el input
+
+    let nombreFondo = document.getElementById("inputNombre");
+    let apellidoFondo = document.getElementById("inputApellido");
+    let notaFondo = document.getElementById("inputNota");
+
+    if (inputNota === "") {
+        notaFondo.classList.add("fondoSombraRoja");
+    }
+
+    inputNota = parseInt(inputNota);// convertir la nota ingresada por el ususario en un Entero
+
+    // Validar que se hayan ingresado todos los campos
+    if (inputNombre === "" || inputApellido === "" || inputNota === "") {
+        
+        if (inputNombre === "") {
+            nombreFondo.classList.add("fondoSombraRoja");
+            apellidoFondo.classList.remove("fondoSombraRoja");
+            notaFondo.classList.remove("fondoSombraRoja");
+        }
+
+        if (inputApellido === "") {
+            apellidoFondo.classList.add("fondoSombraRoja");
+            nombreFondo.classList.remove("fondoSombraRoja");
+            notaFondo.classList.remove("fondoSombraRoja");
+        }
+
+        if (inputNombre === "" && inputApellido === "") {
+            nombreFondo.classList.add("fondoSombraRoja");
+            apellidoFondo.classList.add("fondoSombraRoja");
+        }
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+
+        });
+        Toast.fire({
+            icon: "error",
+            title: "Debes ingresar todos los datos"
+        });
+        return;
+    }
+    else if // Comprobar que los input de texto no contengan numeros
+        (!/^[A-Za-z]+$/.test(inputNombre) || !/^[A-Za-z]+$/.test(inputApellido)) {
+
+        if (inputNombre === "") {
+            nombreFondo.classList.add("fondoSombraRoja");
+            notaFondo.classList.remove("fondoSombraRoja");
+        }
+
+        if (inputApellido === "") {
+            apellidoFondo.classList.add("fondoSombraRoja");
+            notaFondo.classList.remove("fondoSombraRoja");
+        }
+
+        if (!/^[A-Za-z]+$/.test(inputNombre)) {
+            nombreFondo.classList.add("fondoSombraRoja");
+        }
+
+        if (!/^[A-Za-z]+$/.test(inputApellido)) {
+            apellidoFondo.classList.add("fondoSombraRoja");
+        }
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+
+        });
+        Toast.fire({
+            icon: "error",
+            title: "Tu nombre y Apellido deben ser solo letras"
+        });
+        return;
+    } else if
+        // Validar que la nota esté dentro del rango permitido 
+        (isNaN(inputNota) || inputNota < 1 || inputNota > 10) {
+
+        notaFondo.classList.add("fondoSombraRoja");
+
+        nombreFondo.classList.remove("fondoSombraRoja");
+        apellidoFondo.classList.remove("fondoSombraRoja");
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+
+        });
+        Toast.fire({
+            icon: "error",
+            title: "La nota debe ser un numero entre 1-10"
+        });
+        return;
+    } else {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "success",
+            title: "Añadido correctamente"
+        });
+
+        nombreFondo.classList.remove("fondoSombraRoja")
+        apellidoFondo.classList.remove("fondoSombraRoja")
+        notaFondo.classList.remove("fondoSombraRoja")
+    }
+
+    // Agregar valores a la tabla
+    let tabla = document.getElementById("miTabla").getElementsByTagName("tbody")[0];  // llamar al tbody de la tabla
+    let fila = tabla.insertRow();     // Insertar fila en la tabla
+
+    let nombreCelda = fila.insertCell(0);     // Agregar celda en la posicion 0 
+    let apellidoCelda = fila.insertCell(1);   // Agregar celda en la posicion 1
+    let notaCelda = fila.insertCell(2);       // Agregar celda en la posicion 2 
+    let aprobacion = fila.insertCell(3)       // Agregar celda en la posicion 3 
+
+    // A estas celdas le ponemos el contenido que haya ingresado el ususario.
+    nombreCelda.textContent = inputNombre;
+    apellidoCelda.textContent = inputApellido;
+    notaCelda.textContent = inputNota;
+
+    // A la Celda de aprobacion la rellenamos con "Aprobado" p "Desaprobado" dependiendo la nota 
+    aprobacion.textContent = (inputNota >= 7) ? "Aprobado" : "Desaprobado";
+
+    if (inputNota >= 7) {
+        aprobacion.style.backgroundColor = "#5dff93";
+    } else {
+        aprobacion.style.backgroundColor = "#fd3333";
+    }
+
+    // Guardamos en una variable mediante la clase "Estudiante" los datos ingresados por el usuario 
+    estudiantes[estudiantes.length] = new Estudiante(inputNombre, inputApellido, parseInt(inputNota));
+
+    // Reseteamos el valor de todos los inputs para que queden vacios una vez se aprete el boton de CONFIRMAR
+    document.getElementById("inputNombre").value = "";
+    document.getElementById("inputApellido").value = "";
+    document.getElementById("inputNota").value = "";
+
+
+    // Guardamos los datos del usuario en el LocalStorage
+    localStorage.setItem("Usuarios", JSON.stringify(estudiantes));
+
+    let usuariosJSON = JSON.parse(localStorage.getItem('Usuarios')); // Llamamos al usuario convirtiendolo de cadena de texto a Objecto
+    console.log(usuariosJSON); // Lo mostrramos en la consola 
+
+    extraerUsuarios();
+    calcularDatos()
+}
+
+
+
+function addEventListeners() {     // lo ejecutamos al iniciar la pagina para cargar el LocalSorage y que este se agregue a la tabla
+
+    extraerUsuarios();
+
+
+    for (let i = 0; i < estudiantes.length; i++) {
+
+        let tabla = document.getElementById("miTabla").getElementsByTagName("tbody")[0];  // llamar al tbody de la tabla
+        let fila = tabla.insertRow();     // Insertar fila en la tabla
+
+        let nombreCelda = fila.insertCell(0);     // Agregar celda en la posicion 0 
+        let apellidoCelda = fila.insertCell(1);   // Agregar celda en la posicion 1
+        let notaCelda = fila.insertCell(2);       // Agregar celda en la posicion 2 
+        let aprobacion = fila.insertCell(3)       // Agregar celda en la posicion 3 
+
+        // A estas celdas le ponemos el contenido que haya ingresado el ususario.
+        nombreCelda.textContent = estudiantes[i].nombre;
+        apellidoCelda.textContent = estudiantes[i].apellido;
+        notaCelda.textContent = estudiantes[i].nota;
+
+        // A la Celda de aprobacion la rellenamos con "Aprobado" p "Desaprobado" dependiendo la nota 
+        aprobacion.textContent = (estudiantes[i].nota >= 7) ? "Aprobado" : "Desaprobado";
+
+        if (estudiantes[i].nota >= 7) {
+            aprobacion.style.backgroundColor = "#5dff93";
+        } else {
+            aprobacion.style.backgroundColor = "#fd3333";
+        };
+    }
+}
+
 //
 function eliminarFilasTabla() {
     // Eliminar todas las filas de la tabla
@@ -243,7 +356,7 @@ document.getElementById("botonLimpiarTodo").addEventListener("click", function (
 // Funcion para iniciar todos las funcioones internas, esta funcion se inicia cuando el usuario le da click al boton "CONFIRMAR" y agrega su nota al cuadro, a partir de ahi se actualizan los resultados de por ejemplo: Mejor Nota, Peor Nota, Promedio de notas, etc.
 let funcionInicio = document.getElementById("botonAgregar");
 funcionInicio.addEventListener("click", () => {
-    FuncionDeInicio();
+    funcionDeInicio();
 })
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -253,4 +366,25 @@ calcularDatos();      // seguido a eso calculamos todos los datos
 
 
 
+// Consumir la API de Imagen random
+let cuadro = document.getElementById("publicidad");
+let textoPublicidad = document.getElementById("textoPublicidad")
 
+const url = "https://picsum.photos/seed/picsum/200/300";
+
+let publicidadRandom = () => {
+    fetch(url)
+        .then((response) => {
+            return response.blob();
+        })
+        .then((blob) => {
+            textoPublicidad.innerText = "Contenido Publicitario"
+            let img = document.createElement('img');
+            let imgUrl = URL.createObjectURL(blob);
+            img.src = imgUrl;
+            cuadro.appendChild(img);
+        })
+        .catch((error) => console.error(`Error al cargar la publicidad`, error))
+}
+
+window.addEventListener("load", publicidadRandom);

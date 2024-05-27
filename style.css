@@ -49,19 +49,22 @@ table {
 table th {
     text-align: center;
     color: white;
-    background-color: #50C878;
+    background-color: #009879;
     padding: 6px;
 }
 
 table td,
 td {
-    border-bottom: 1px solid #ddd;
     padding: 3px;
     text-align: center;
 }
 
 tr:nth-child(even) {
     background-color: #f0eaea;
+}
+
+table#miTabla tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
 }
 
 .infoPosTabla {
@@ -259,15 +262,53 @@ button {
     padding: .6rem;
 }
 
-#inputNombre,
-#inputApellido,
-#inputNota,
-#botonAgregar,
-#botonLimpiarTodo {
+.fondoSombraGris {
     padding: .2rem;
     padding-left: .4rem;
     margin: .2rem;
     border: none;
     box-shadow: 0 0 4px .4px rgb(0, 0, 0, .5);
     border-radius: 2px;
+}
+
+.fondoSombraRoja {
+    padding: .2rem;
+    padding-left: .4rem;
+    margin: .2rem;
+    border: none;
+    box-shadow: 0 0 4px .4px rgb(255, 0, 0);
+    border-radius: 2px;
+}
+
+.fraseRandom {
+    text-align: center;
+    background-color: #E6FAFC;
+    margin: 3rem;
+    border-radius: 1rem;
+    padding: 1.3rem;
+    box-shadow: 0 0 4px .4px rgb(0, 0, 0, .5);
+
+    span {
+        font-weight: bold;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+        margin-bottom: .3rem;
+    }
+}
+
+
+
+#publicidad {
+    width: 30%;
+    margin: auto;
+    text-align: center;
+    padding: .5rem;
+    border-radius: 1rem;
+    overflow: hidden;
+
+    img {
+        height: 200px;
+    }
 }
